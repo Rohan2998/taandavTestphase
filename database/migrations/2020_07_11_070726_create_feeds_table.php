@@ -18,8 +18,10 @@ class CreateFeedsTable extends Migration
             $table->integer('uploaded_by');
             $table->string('title');
             $table->string('description')->nullable();
+            //this is for image
             $table->string('img_disk')->default('admin_feed');
             $table->string('img_name')->nullable();
+            //this is when link is provided
             $table->string('link')->nullable();
             $table->timestamps();
         });

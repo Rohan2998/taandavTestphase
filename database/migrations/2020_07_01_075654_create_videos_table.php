@@ -19,8 +19,6 @@ class CreateVideosTable extends Migration
             //this is for videos
             $table->string('title');
             $table->string('description')->nullable();
-            $table->string('original_name')->nullable();
-            $table->string('disk')->default('original_path');
             $table->string('path');
             $table->string('Stream_disk')->default('streaming_path');
             $table->string('stream_path')->nullable();
@@ -28,9 +26,10 @@ class CreateVideosTable extends Migration
             $table->datetime('converted_for_streaming_at')->nullable();
             $table->string('thumb_disk')->default('thumb_path');
             $table->string('thumbnails')->nullable();
-            //this is for images and gif or link
+            //this is for images and gif 
             $table->string('art_img_path')->default('art_img');
             $table->string('art_img_name')->nullable();
+            //this is for link
             $table->string('link')->nullable();
             $table->timestamps();
         });

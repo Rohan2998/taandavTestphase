@@ -1,12 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <!-- Begin Page Content -->
 
                     <div class="container">
                     <!-- Collapsable Card Example -->
@@ -92,27 +86,42 @@
               <!-- row end -->
               </div>
 
-              <div class="col-auto">
-              @if($customers->isEmpty())
+             <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+            <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Users Table</h6>
+            </div>
+            @if($customers->isEmpty())
                 <h1>No Data at the moment</h1>
-                @else
-                <table class="table">
-                <thead class="thead-primary">
+            @else
+            <div class="card-body">
+            <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Actions</th>
-                </thead>
-                <tbody>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </tfoot>
+            <tbody>
                 @foreach($customers as $customer)
                 <tr>
                 <td>{{$customer->id}}</td>
                 <td>{{$customer->name}}</td>
-                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                <td><a class="btn btn-success" href="#">Edit</a>  ||  <a class="btn btn-danger" href="#">Delete</a></td>
                 </tr>
                 @endforeach
-                </tbody>
+            </tbody>
                 @endif
-                </table>
+            </table>
               
               {{ $customers->links() }}
 

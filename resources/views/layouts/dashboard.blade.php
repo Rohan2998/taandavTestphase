@@ -71,6 +71,11 @@
               @if(Auth::check() && App\ModulePermission::find(Auth::user()->id)->upload_art == true)
                 <a class="collapse-item" href="{{ route('admin.uploader') }}">Upload Art</a>
               @endif
+
+              @if(Auth::check() && App\ModulePermission::find(Auth::user()->id)->manage_video == true)
+                <a class="collapse-item" href="#">Manage Videos</a>
+              @endif
+
             @endif
           </div>
         </div>
@@ -97,12 +102,13 @@
               @endif
 
               @if(Auth::check() && App\ModulePermission::find(Auth::user()->id)->toggle_user_info == true)
-                <a class="collapse-item" href="#">Hide Users info</a>
+                <a class="collapse-item" href="{{ route('admin.usershow') }}">Hide Users info</a>
               @endif
 
               @if(Auth::check() && App\ModulePermission::find(Auth::user()->id)->approve_ads == true)
-                <a class="collapse-item" href="#">Approve Ads</a>
+                <a class="collapse-item" href="{{ route('admin.ShowAds') }}">Approve Ads</a>
               @endif
+              
             @endif
           </div>
         </div>
@@ -126,8 +132,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Account Settings:</h6>
-            <a class="collapse-item" href="#">Reset Password</a>
-            <a class="collapse-item" href="#">Change Email</a>
+            <a class="collapse-item" href="{{ route('admin.ResetPage') }}">Reset Password</a>
+            <a class="collapse-item" href="{{ route('admin.ChangeEmailPage') }}">Change Email</a>
           </div>
         </div>
       </li>
@@ -212,14 +218,14 @@
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
 
-                @if(App\Advertisement::where('approved',false)
+                @if(App\Advertisement::where(['approved' => 0, 'disapproved' => 0])
                 ->orderBy('created_at', 'DESC')
                 ->take(3)
                 ->get()->isEmpty())
                 @else
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">
-                {{ App\Advertisement::where('approved',false)
+                {{ App\Advertisement::where(['approved' => 0, 'disapproved' => 0])
                 ->get()->count() }}
                 </span>
                 @endif
@@ -230,7 +236,7 @@
                 <h6 class="dropdown-header">
                   Approve alerts
                 </h6>
-                @foreach(App\Advertisement::where('approved',false)
+                @foreach(App\Advertisement::where(['approved' => 0, 'disapproved' => 0])
                 ->orderBy('created_at', 'DESC')
                 ->take(3)
                 ->get() as $adsforapproval)
@@ -246,7 +252,7 @@
                   </div>
                 </a>
                 @endforeach
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('admin.ShowAds') }}">Show All Alerts</a>
               </div>
             </li>
 

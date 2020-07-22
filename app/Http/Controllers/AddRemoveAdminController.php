@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use App\User;
 use App\ModulePermission;
@@ -22,7 +23,7 @@ class AddRemoveAdminController extends Controller
             return view('admin.addAdmin');
         }
         else {
-            return view('auth.login');
+            return redirect()->route('adminLogin');
         }
     }
 
@@ -38,7 +39,7 @@ class AddRemoveAdminController extends Controller
             return view('admin.removeAdmin',compact('moduleAdmins'));
         }
         else {
-            return view('auth.login');
+            return redirect()->route('adminLogin');
         }
     }
 
@@ -60,7 +61,7 @@ class AddRemoveAdminController extends Controller
             return redirect()->back()->with('getresults',$UserID);
         }
         else {
-            return view('auth.login');
+            return redirect()->route('adminLogin');
         }
     }
 
@@ -88,6 +89,7 @@ class AddRemoveAdminController extends Controller
         $confirmpassword    =   $request->confirmpassword;
         $modulepermit       =   $request->privileges;
 
+
         
         $user = User::create([
             'name'          =>  $name,
@@ -95,7 +97,7 @@ class AddRemoveAdminController extends Controller
             'password'      =>  Hash::make($password),
         ]);
 
-        $addadmin = $remadmin = $upfeed = $upart = $appads = $togguser = 0;
+        $addadmin = $remadmin = $upfeed = $upart = $appads = $togguser = $managevid = 0;
 
            
         if($request->addingadminpriv){
@@ -122,6 +124,10 @@ class AddRemoveAdminController extends Controller
             $togguser = 1;
         }
 
+        if($request->managingvideo){
+            $managevid = 1;
+        }
+
         
 
         $permission = ModulePermission::create([
@@ -131,6 +137,7 @@ class AddRemoveAdminController extends Controller
             'upload_feed'           =>  $upfeed,
             'upload_art'            =>  $upart,
             'approve_ads'           =>  $appads,
+            'manage_video'          =>  $managevid,
             'toggle_user_info'      =>  $togguser
         ]);
 
@@ -185,6 +192,16 @@ class AddRemoveAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('users')->where('id',$id)->delete();
+        DB::table('module_permissions')->where('user_id',$id)->delete();
+
+        if(Auth::check()){
+            $moduleAdmins = ModulePermission::Paginate(5);
+            return view('admin.removeAdmin',compact('moduleAdmins'));
+        }
+        else {
+            return redirect()->route('adminLogin');
+        }
+        
     }
 }

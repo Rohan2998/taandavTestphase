@@ -12,6 +12,7 @@ use FFMpeg\Filters\Video\VideoFilters;
 use FFMpeg;
 use Carbon\Carbon;
 use Artisan;
+use Illuminate\Support\Facades\File;
 
 class CompressUploadedVideo implements ShouldQueue
 {
@@ -37,7 +38,7 @@ class CompressUploadedVideo implements ShouldQueue
     {
         set_time_limit(0);
         
-        $converted_name = 'stream'.$this->video->path;
+        $converted_name = $this->video->path;
         
         // open the uploaded video from the right disk...
         FFMpeg::fromDisk('original_path')
@@ -63,7 +64,8 @@ class CompressUploadedVideo implements ShouldQueue
             ->toDisk('thumb_path')
             ->save($img_name);
         
-        
+        echo "\n Encoding complete!";
+
         //update the database so we know the convertion is done!
         $this->video->update([
             'converted_for_streaming_at' => Carbon::now(),
@@ -72,12 +74,17 @@ class CompressUploadedVideo implements ShouldQueue
             'thumbnails' => $img_name
         ]);
 
-        if(strpos(php_sapi_name(), 'cli') !== false){
+        echo "\nThumbnail Created";
 
+        $delete_path = ('original_path').'/'.$this->video->path;
+        
+        echo "\n $delete_path";
+
+        if(File::exists($delete_path)){
+            File::delete($delete_path);
         }
-        else{
-            Artisan::call('queue:work--stop-when-empty');
-        }
+
+        echo "\n File Deleted";
 
     }
 } 

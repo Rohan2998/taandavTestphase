@@ -19,6 +19,7 @@ class CreateModulePermissionsTable extends Migration
             $table->boolean('upload_feed')->default(false);
             $table->boolean('upload_art')->default(false);
             $table->boolean('approve_ads')->default(false);
+            $table->boolean('manage_video')->default(false);
             $table->boolean('toggle_user_info')->default(false);
             $table->boolean('add_admin')->default(false);
             $table->boolean('remove_admin')->default(false);

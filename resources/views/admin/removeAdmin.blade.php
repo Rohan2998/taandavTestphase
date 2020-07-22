@@ -1,11 +1,6 @@
 @extends('layouts.dashboard')
 
 @section('content')
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     
                     <div class="col justify-content-center">
                     <form method="post" action="{{ route('admin.remadm') }}">
@@ -13,43 +8,71 @@
                         <input type="submit" value="search" name="searchadmin">
                         <br></br>
                         @if(session('getresults'))
-                        <table class="table">
+                        <!-- Data Table -->
+                        <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Admins</h6>
+                        </div>
+                        <div class="card-body">
+                        <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Action</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
                         <tbody>
                         @foreach(session('getresults') as $getresult)
                         <tr>
                         <td>{{ $getresult->id }}</td>
                         <td>{{ $getresult->name }}</td>
-                        <td><a href="#" class="btn btn-success">Edit</a> || 
-                        <a href="#" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{{ route('admin.editAdmin',$getresult->id) }}" class="btn btn-success">Edit</a> || 
+                        <a href="{{ route('admin.deletedAdmin',$getresult->id) }}" class="btn btn-danger">Delete</a></td>
                         </tr>
                         @endforeach
                         </tbody>
                         </table>
                         @else
-                        <table class="table">
+                        <!-- Data Table -->
+                        <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Admins Table</h6>
+                        </div>
+                        <div class="card-body">
+                        <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Action</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
                         <tbody>
                         @if($moduleAdmins->isEmpty())
                         @else
                         @foreach($moduleAdmins as $admins)
                         <tr>
-                        <td>{{ $admins->id }}</td>
+                        <td>{{ $admins->user_id }}</td>
                         <td>{{ App\User::find($admins->user_id)->name }}</td>
-                        <td><a href="#" class="btn btn-success">Edit</a> || 
-                        <a href="#" class="btn btn-danger">Delete</a></td>
+                        <td><a href="{{ route('admin.editAdmin',$admins->user_id) }}" class="btn btn-success">Edit</a> || 
+                        <a href="{{ route('admin.deletedAdmin',$admins->user_id) }}" class="btn btn-danger">Delete</a></td>
                         </tr>
                         @endforeach
                         @endif

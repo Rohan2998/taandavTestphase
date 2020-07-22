@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Customer;
 
 class ToggleUserController extends Controller
 {
@@ -13,7 +16,14 @@ class ToggleUserController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::paginate(10);
+        if (Auth::check()) {
+            return view('admin.toggleUser',compact('customers'));
+        }
+        else{
+            return redirect()->route('adminLogin');
+        }
+
     }
 
     /**
@@ -56,7 +66,14 @@ class ToggleUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user_customer = Customer::find($id)->first()->get();
+        if (Auth::check()) {
+            return view('admin.editingUser',compact('user_customer'));
+        }
+        else{
+            return redirect()->route('adminLogin');
+        }
+
     }
 
     /**
@@ -68,7 +85,29 @@ class ToggleUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $showContact = $showSkills = 0;
+
+        if($request->showingSkills){
+            $showSkills = 1;
+        }
+
+        if($request->showingContact){
+            $showContact = 1;
+        }
+
+        $Cust = Customer::where('id',$id);
+        $Cust->update([
+                'show_skills'           =>  $showSkills,
+                'show_contact'          =>  $showContact,
+        ]);
+        
+        if(Auth::check()){
+            $customers = Customer::paginate(10);
+            return view('admin.toggleUser',compact('customers'));
+        }
+        else {
+            return redirect()->route('adminLogin');
+        }
     }
 
     /**
@@ -79,6 +118,15 @@ class ToggleUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('customers')->where('id',$id)->delete();
+        DB::table('skills')->where('customer_id',$id)->delete();
+        
+        if(Auth::check()){
+            $customers = Customer::paginate(10);
+            return view('admin.toggleUser',compact('customers'));
+        }
+        else {
+            return redirect()->route('adminLogin');
+        }
     }
 }

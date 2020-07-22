@@ -21,7 +21,10 @@ class CreateCustomersTable extends Migration
             $table->string('contact_no');
             $table->string('password')->nullable();
             $table->boolean('show_skills')->default(false);
+            $table->string('about_me')->nullable();
             $table->boolean('show_contact')->default(false);
+            $table->boolean('facebook_signin')->default(false);
+            $table->boolean('google_signin')->default(false);
             $table->boolean('social_signin')->default(false);
             $table->boolean('subscription_exp')->default(true);
             $table->rememberToken();

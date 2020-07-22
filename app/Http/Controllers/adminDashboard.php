@@ -8,6 +8,7 @@ use App\Video;
 use App\Feed;
 use App\Advertisement;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class adminDashboard extends Controller
 {
@@ -18,11 +19,18 @@ class adminDashboard extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::paginate(5);
         $art = Video::all();
         $feeds = Feed::all();
-        $ads = DB::table('advertisements')->where('approved',false);
-        return view('admin.index',compact('customers','art','feeds','ads'));
+        $ads = DB::table('advertisements')->where(['approved' => 0, 'disapproved' => 0]);
+        
+        if (Auth::check()) {
+            return view('admin.index',compact('customers','art','feeds','ads'));
+        }
+        else{
+            return redirect()->route('adminLogin');
+        }
+        
     }
 
     /**

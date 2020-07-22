@@ -21,7 +21,7 @@ class VideoController extends Controller
             return view('admin.uploader');
         }
         else {
-            return view('auth.login');
+            return view('adminLogin');
         }
         
     }
@@ -44,8 +44,6 @@ class VideoController extends Controller
             $videoOf->move('original_path',$path);
             $video = Video::create([
                 'uploaded_by'   => Auth::user()->id,
-                'disk'          => 'original_path',
-                'original_name' => $videoOf->getClientOriginalName(),
                 'path'          => $path,
                 'title'         => $title,
             ]);

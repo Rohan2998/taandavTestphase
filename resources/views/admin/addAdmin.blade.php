@@ -1,11 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+
                     
                     <div class="col justify-content-center">
                         <h3 class="text-center">
@@ -81,9 +77,12 @@
                     <label for="uploadingfeedspriv">Uploading Feeds</label> &nbsp;
 
 
-
                     <input type="checkbox" name="uploadingartpriv" id="uploadingartpriv" value="1">
-                    <label for="uploadingartpriv">Uploading Art</label> &nbsp; 
+                    <label for="uploadingartpriv">Uploading Art</label> &nbsp;
+
+
+                    <input type="checkbox" name="managingvideo" id="managingvideo" value="1">
+                    <label for="managingvideo">Managing Videos</label> &nbsp; 
                 
                     
                     <input type="checkbox" name="approveadspriv" id="approveadspriv" value="1">
