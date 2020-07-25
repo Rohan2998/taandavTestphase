@@ -73,7 +73,7 @@
               @endif
 
               @if(Auth::check() && App\ModulePermission::find(Auth::user()->id)->manage_video == true)
-                <a class="collapse-item" href="#">Manage Videos</a>
+                <a class="collapse-item" href="{{ route('admin.ListVideo') }}">Manage Videos</a>
               @endif
 
             @endif
@@ -139,18 +139,18 @@
       </li>
 
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="charts.html">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Charts</span></a>
-      </li>
+      </li> -->
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="tables.html">
           <i class="fas fa-fw fa-table"></i>
           <span>Tables</span></a>
-      </li>
+      </li> -->
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
@@ -396,6 +396,9 @@
   <!-- Core plugin JavaScript-->
   <script src="{{ asset('admincss/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
   <!-- Custom scripts for all pages-->
   <script src="{{ asset('admincss/js/sb-admin-2.min.js') }}"></script>
 
@@ -405,6 +408,7 @@
   <!-- Page level custom scripts -->
   <script src="{{ asset('admincss/js/demo/chart-area-demo.js') }}"></script>
   <script src="{{ asset('admincss/js/demo/chart-pie-demo.js') }}"></script>
+
 
 </body>
 

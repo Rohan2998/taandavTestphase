@@ -29,11 +29,11 @@
           </tr>
         </tfoot>
         <tbody>
-        @foreach($customers as $customer)
+        @foreach($customers as $cust)
                 <tr>
-                <td>{{$customer->id}}</td>
-                <td>{{$customer->name}}</td>
-                <td><a class="btn btn-success" href="{{ route('admin.EditUser',$customer->id) }}">Edit</a>  ||  <a class="btn btn-danger" href="{{ route('admin.DeletingUser',$customer->id) }}">Delete</a></td>
+                <td>{{$cust->id}}</td>
+                <td>{{$cust->name}}</td>
+                <td><a class="btn btn-success" href="{{ route('admin.EditUser',$cust->id) }}">Edit</a>  ||  <a class="btn btn-danger" href="{{ route('admin.DeletingUser',$cust->id) }}">Delete</a></td>
                 </tr>
         @endforeach
         </tbody>

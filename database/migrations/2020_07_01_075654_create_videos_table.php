@@ -15,8 +15,8 @@ class CreateVideosTable extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('uploaded_by_admin')->default(true);
             $table->integer('uploaded_by');
-            //this is for videos
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('path');
@@ -26,11 +26,6 @@ class CreateVideosTable extends Migration
             $table->datetime('converted_for_streaming_at')->nullable();
             $table->string('thumb_disk')->default('thumb_path');
             $table->string('thumbnails')->nullable();
-            //this is for images and gif 
-            $table->string('art_img_path')->default('art_img');
-            $table->string('art_img_name')->nullable();
-            //this is for link
-            $table->string('link')->nullable();
             $table->timestamps();
         });
     }

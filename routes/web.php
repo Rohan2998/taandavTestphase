@@ -91,6 +91,10 @@ Route::group(
     Route::get('changeEmailPage','changeEmailController@index')->name('ChangeEmailPage');
     Route::post('submitchangeEmailPage','changeEmailController@update')->name('SubmitChangeEmailPage');
 
+
+    //Managing Videos
+    Route::get('listVideo','ManageVideoController@index')->name('ListVideo');
+    Route::get('showVideo\{id}','ManageVideoController@show')->name('ShowVideo');
   }
 );
 

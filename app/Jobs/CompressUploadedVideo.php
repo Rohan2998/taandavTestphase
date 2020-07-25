@@ -76,7 +76,7 @@ class CompressUploadedVideo implements ShouldQueue
 
         echo "\nThumbnail Created";
 
-        $delete_path = ('original_path').'/'.$this->video->path;
+        $delete_path = app_path("original_path/'.$this->video->path");
         
         echo "\n $delete_path";
 

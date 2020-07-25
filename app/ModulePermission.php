@@ -15,7 +15,7 @@ class ModulePermission extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'upload_feed', 'upload_art', 'approve_ads', 'toggle_user_info', 'add_admin', 'remove_admin',
+        'user_id', 'upload_feed', 'upload_art', 'approve_ads', 'manage_video', 'toggle_user_info', 'add_admin', 'remove_admin',
     ];
 
     public function users(){

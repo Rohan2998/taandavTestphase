@@ -66,7 +66,7 @@ class ToggleUserController extends Controller
      */
     public function edit($id)
     {
-        $user_customer = Customer::find($id)->first()->get();
+        $user_customer = DB::table('customers')->where('id',$id)->get();
         if (Auth::check()) {
             return view('admin.editingUser',compact('user_customer'));
         }
